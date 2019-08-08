@@ -4,7 +4,7 @@ class Message{
     // database connection and table name
     private $conn;
     private $table_name = "tb_message";
- 
+    
     // object properties
     public $id;
     public $date;
