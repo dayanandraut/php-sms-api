@@ -21,7 +21,7 @@ class Message{
     // create message
     function create(){    
     // query to insert record            
-        $query = "INSERT INTO
+    $query = "INSERT INTO
                         " . $this->table_name . "
                     SET
                     date=:date, contacts=:contacts, message=:message, 
