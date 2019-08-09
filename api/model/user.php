@@ -13,7 +13,6 @@ class User{
     public $messagesSent;
     public $daysRemaining;
     public $renewalDate;
-
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -32,30 +31,55 @@ class User{
 
     // GET INDIVIDUAL User BY ID
     function readById($id){        
-        $query = "SELECT * FROM " . $this->table_name . " WHERE email id = ? ";        
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id = ? ";        
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
-        // execute query
         $stmt->execute();        
         return $stmt;
     }
 
-    // validate number of messages left
-    function validateMessagesLeft($userId, $no_messages){
-        $stmt = $user->readById($userId);
-        $num = $stmt->rowCount(); 
-        $messages_left = 0;       
+    function getUserDetails($userId){   
+        $stmt = $this->readById($userId);
+        $num = $stmt->rowCount();               
         // check if more than 0 record found
         if($num>0){    
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 // extract row
                 // this will make $row['name'] to
                 // just $name only
-                extract($row);        
-                $messages_left = $row['messagesLeft'];
-
+                //print_r($row);
+                extract($row); 
+                return array('firmName'=>$firmName,'messagesLeft'=>$messagesLeft);    
+                
+    
     }
-    return $messages_left >= $no_messages ? true: false;
+    return array();
+    }
+//-----------------------------------------------------------------------
+    // update user
+    function update($msgSent, $userId){ 
+        // update query
+        $query = "UPDATE " . $this->table_name . "                
+                SET
+                messagesLeft=messagesLeft-:msgSent, messagesSent=messagesSent+:msgSent
+                WHERE    id = :id";     
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+     
+        // bind values
+        $stmt->bindParam(":id", $userId);
+        $stmt->bindParam(":msgSent", $msgSent);
 
-}
+        // execute the query
+        print_r($stmt);
+        if($stmt->execute()){
+            $affected_rows = $stmt->rowCount();
+            echo 'affected rows: '.$affected_rows;
+            if($affected_rows>0) return 1; // updated successfully
+            return 0; // executed but not updated
+        }
+     
+        return -1; // didn't execute
+    }
+//------------------------------------------------------------------------------
 }
