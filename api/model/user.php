@@ -59,22 +59,21 @@ class User{
     // update user
     function update($msgSent, $userId){ 
         // update query
-        $query = "UPDATE " . $this->table_name . "                
-                SET
-                messagesLeft=messagesLeft-:msgSent, messagesSent=messagesSent+:msgSent
-                WHERE    id = :id";     
+                   
+        $query = "UPDATE ".$this->table_name." 
+         SET messagesLeft=messagesLeft- :msg_no, messagesSent=messagesSent+ :msg_no WHERE id = :id";
         // prepare query statement
         $stmt = $this->conn->prepare($query);
      
         // bind values
         $stmt->bindParam(":id", $userId);
-        $stmt->bindParam(":msgSent", $msgSent);
+        $stmt->bindParam(":msg_no", $msgSent);
 
         // execute the query
-        print_r($stmt);
+        //print_r($stmt);
         if($stmt->execute()){
             $affected_rows = $stmt->rowCount();
-            echo 'affected rows: '.$affected_rows;
+            //echo 'affected rows: '.$affected_rows;
             if($affected_rows>0) return 1; // updated successfully
             return 0; // executed but not updated
         }

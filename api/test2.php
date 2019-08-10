@@ -15,7 +15,7 @@ $user = new User($db);
 $uid = $_GET['uid'];
 $msgSent = $_GET['msgsent'];
 
-$status = $user->update($uid, $msgSent);
+$status = $user->update($msgSent, $uid);
 if($status==1) echo "Updated successfully";
 else echo "Not updated successfully";
 ?>
