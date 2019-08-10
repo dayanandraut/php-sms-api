@@ -39,7 +39,7 @@ class Message{
             $stmt->bindParam(":tbUserId", $this->tbUserId);
             $stmt->bindParam(":purpose", $this->purpose);
             
-            print_r($query);
+            //print_r($query);
             // execute query
             if($stmt->execute()){
                 return true;
