@@ -1,5 +1,5 @@
 # php-sms-api
-restful api created in php to send sms through sparrow sms (Nepal’s leading Bulk SMS Service)
+restful api created in php to send sms through [sparrow sms](http://sparrowsms.com/) -Nepal’s leading Bulk SMS Service
 
 ## Description
 There are two endpoint:
@@ -24,3 +24,8 @@ Hit the endpoint '..../php-sms-api/api/message/create.php' with body in the foll
     "tbUserId":"10001",
     "purpose":"Test"
 }
+
+## Contribution
+1. Currently the project is not using any authentication. Anyone from any system can hit the api endpoints. I need help in setting up the authentication.
+
+
